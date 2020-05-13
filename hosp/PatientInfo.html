@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+  <head>
+    <meta charset="utf-8"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/fraudadmin/bootstrap-3.3.4/css/bootstrap.css">
+	<script src="/fraudadmin/datepicker/js/bootstrap-datepicker.js"></script>
+    <link rel="stylesheet" href="/fraudadmin/datepicker/css/datepicker.css">
+	<script src="/fraudadmin/bootstrap-3.3.4/js/bootstrap.js"></script>
+	<script src="/fraudadmin/bootstrap-multiselect/js/bootstrap-multiselect.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>	
+
+	<link rel="stylesheet" href="/fraudadmin/bootstrap-multiselect/css/bootstrap-multiselect.css" type="text/css"/>
+
+
+   
+  </head>
+  <body>
+	<div  ng-controller="myCtrl">
+	<h2 class="text-center">Patient Information</h2>
+	<div class="container-fluid panel panel-default">
+	<div class="btn-group btn-group-justified" >
+		<div class="btn-group"  style="background-color:white;">
+		  <button type="button" ng-model="newpatient" class="btn btn-primary" ng-click="shownew();">New patient</button>
+		</div>
+		<div class="btn-group" >
+		  <button type="button" ng-model="oldpatient" class="btn btn-primary" ng-click="showsearch();">Existing Patient</button>
+		</div>
+		<div class="btn-group" >
+		  <button type="button" ng-model="patientqueue" class="btn btn-primary" ng-click="showqueue();">Patient Queue</button>
+		</div>		
+	</div>
+	<br>
+	<form ng-hide="newform">
+
+		<div class="form-group" >
+			<div class="row" style="background-color:#EEF2EA;">
+			  <div class="col-sm-3" ><label for="name">First Name:</label></div>
+			  <div class="col-sm-3" ><input type="text" class="form-control" ng-model="p.firstname" placeholder="First Name"></div>
+			  <div class="col-sm-3" ><label for="name">Last Name:</label></div>
+			  <div class="col-sm-3" ><input type="text" class="form-control" ng-model="p.lastname" placeholder="Last Name"></div>
+			</div>
+		</div>
+
+		<div class="form-group" >
+		<div class="row" style="background-color:white;">
+			  <div class="col-sm-3" ><label for="address">Address Line1:</label></div>
+			  <div class="col-sm-9" ><input type="text" class="form-control" ng-model="p.addressline1" placeholder="Address Line 1"></div>
+		</div>
+		</div>
+
+		<div class="form-group" >		
+		<div class="row" style="background-color:#EEF2EA;">
+			  <div class="col-sm-3" ><label for="address">Address Line2:</label></div>
+			  <div class="col-sm-9" ><input type="text" class="form-control" ng-model="p.addressline2" placeholder="Address Line 2"></div>
+		</div>		
+		</div>
+
+		<div class="form-group" >		
+		<div class="row" style="background-color:white;">
+			  <div class="col-sm-3" ><label for="address">City:</label></div>
+			  <div class="col-sm-9" ><input type="text" class="form-control" ng-model="p.city" placeholder="City"></div>
+		</div>		
+		</div>
+
+		<div class="form-group" >		
+		<div class="row" style="background-color:#EEF2EA;">
+			  <div class="col-sm-3" ><label for="address">State:</label></div>
+			  <div class="col-sm-3" >
+				<select class="form-control" ng-model="p.state" placeholder="State" ng-options="x for x in names">
+
+				</select>		
+			  </div>		
+		</div>
+		</div>
+		
+		<div class="form-group" >		
+		<div class="row" style="background-color:white;">
+			  <div class="col-sm-3" ><label for="address">Phone Number:</label></div>
+			  <div class="col-sm-3" ><input type="text" class="form-control" ng-model="p.phone" placeholder="Phone Number"></div>
+
+			  <div class="col-sm-3" ><label for="address">Email:</label></div>
+			  <div class="col-sm-3" ><input type="email" class="form-control" ng-model="p.email" placeholder="Email"></div>
+		</div>		
+		</div>		
+		
+		<div class="form-group">
+		  <label for="comment">Comments:</label>
+		  <textarea class="form-control" rows="5" ng-model="p.comment"></textarea>
+		</div>
+		
+		<div class="form-group" align="center">
+		  <button type="button" ng-model="save" class="btn btn-default" ng-click="save();">Save</button>
+		  <button type="button" ng-model="clear" ng-click="clear();" class="btn btn-default">Clear</button>
+		</div>
+		</form>
+	
+	<form ng-hide="searchform">
+
+		<div class="form-group" >
+			<div class="row" style="background-color:white;">
+			  <div class="col-sm-3" ><label for="name">Patient ID:</label></div>
+			  <div class="col-sm-3" >
+			  <input type="text" class="form-control" ng-model="patientid" placeholder="Patient ID"></div>
+			  <div class="col-sm-3" ><label for="name">Phone Number:</label></div>
+			  <div class="col-sm-3" >
+			  <input type="text" class="form-control" ng-model="phone" placeholder="Phone Number"></div>
+			</div>			
+		</div>
+		<div class="form-group" >
+			<div class="row" style="background-color:#EEF2EA;">
+			  <div class="col-sm-3" ><label for="name">First Name:</label></div>
+			  <div class="col-sm-3" ><input type="text" class="form-control" ng-model="firstname" placeholder="First Name"></div>
+			  <div class="col-sm-3" ><label for="name">Last Name:</label></div>
+			  <div class="col-sm-3" ><input type="text" class="form-control" ng-model="lastname" placeholder="Last Name"></div>
+			</div>
+		</div>
+		<div class="form-group" align="center">
+		  <button type="button" ng-model="search" class="btn btn-default" ng-click="savenewpatient();">Search</button>
+		  <button type="button" ng-model="clear" class="btn btn-default">Clear</button>
+		</div>
+    </form>	
+
+	
+	<form ng-hide="queueform">
+
+		<div class="form-group" >
+			<div class="row" style="background-color:#white;">
+			  <div class="col-sm-4" ><label>Patient Name</label></div>
+			  <div class="col-sm-4" ><label>Patient Phone</label></div>
+			  <div class="col-sm-4" ><label>To Doctor</label></div>
+			</div>  
+		</div>
+
+			<div  ng-repeat="patient in patientlist">
+			<div class="form-group" >
+				<div class="row" style="background-color:#EEF2EA;">
+				<div class="col-sm-4" ><label for="name">{{patient.firstname + ' ' +patient.lastname}}</label></div>
+			    <div class="col-sm-4" ><label>{{patient.phone}}</label></div>
+			    <div class="col-sm-4" >
+			      <button type="button" ng-model="sendtodoctor" class="btn btn-default" ng-click="sendtodoctor(patient);">Send To Doctor</button>
+			    </div>
+
+				</div>
+			</div>
+			</div>
+
+    </form>		
+	</div>
+
+	</div>
+	
+	
+
+
+	
+<script >
+
+//angular js
+	var app = angular.module('myApp', []);
+	app.controller('myCtrl', function($scope) {
+	$scope.patientlist=[];
+	
+	$scope.clear  = function() {
+		$scope.p.firstname='';
+		$scope.p.lastname='';
+		$scope.p.addressline1='';
+		$scope.p.addressline2='';
+		$scope.p.city='';
+		$scope.p.state='';
+		$scope.p.phone='';
+		$scope.p.email='';
+		$scope.p.comment='';
+	};
+
+	$scope.save  = function() {
+		var data = angular.toJson($scope.p);
+		$scope.patientlist = $scope.patientlist.concat(angular.fromJson(data));
+	};
+		
+	$scope.searchform = true;
+	$scope.queueform = true;
+	$scope.newform = false;
+	
+	$scope.showsearch = function() {
+		$scope.searchform = false;
+		$scope.newform = true;
+		$scope.queueform = true;
+	};
+
+	$scope.shownew = function() {
+		$scope.searchform = true;
+		$scope.newform = false;
+		$scope.queueform = true;
+		
+	};
+
+	$scope.showqueue = function() {
+		$scope.searchform = true;
+		$scope.newform = true;
+		$scope.queueform = false;
+		};	
+	
+	$scope.sendtodoctor = function(patient) {
+	  var index = $scope.patientlist.indexOf(patient);
+	  $scope.patientlist.splice(index, 1);  	
+	};	
+	
+    $scope.names = ["Maharashtra", "Karnataka", "Tamilnadu","Orissa"];
+	});
+	
+
+	
+</script>
+	
+</body>
+  
+
+
+</html>

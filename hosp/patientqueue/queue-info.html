@@ -1,0 +1,31 @@
+		<div class="form-group row" >
+			  <div class="col-lg-9"></div>
+			  <div class="col-lg-3">
+				<button type="button" ng-model="refresh" class="btn btn-primary btn-lg" ng-click="refresh();">Refresh</button>
+			  </div>
+		</div>
+		<table st-table="displayedCollection" st-safe-src="queuelist" class="table table-striped">
+			<thead>
+			<tr>
+				<th st-sort="firstName">First Name</th>
+				<th st-sort="lastName">Last Name</th>
+				<th st-sort="Address">Address</th>
+			</tr>
+			<tr>
+				<th colspan="5"><input st-search="" class="form-control" placeholder="Search ..." type="text"/></th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr ng-repeat="row in displayedCollection">
+				<td>{{row.firstName}}</td>
+				<td>{{row.lastName}}</td>
+				<td>{{row.addressLine1}} {{row.addressLine2}} {{row.city}}</td>
+				<td>
+				<button type="button" ng-click="openPatient(row);" class="btn btn btn-primary">
+				<i class="glyphicon glyphicon-eye-open">
+					</i>
+				</button>
+				</td>
+			</tr>
+			</tbody>
+		</table>

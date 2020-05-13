@@ -1,0 +1,33 @@
+		<div class="form-group row" >
+			  <div class="col-lg-9"></div>
+			  <div class="col-lg-3">
+				<button type="button" ng-model="refresh" class="btn btn-default btn-lg" ng-click="refresh();">Refresh</button>
+			  </div>
+		</div>
+		<table st-table="displayedCollection" st-safe-src="pharmacyqueuelist" class="table table-striped">
+			<thead>
+			<tr>
+				<th colspan="5"><input st-search="" class="form-control" placeholder="Search ..." type="text"/></th>
+			</tr>
+			<tr>
+				<th st-sort="firstName">Name and Address</th>
+			</tr>
+
+			</thead>
+			<tbody>
+			<td>
+					  <uib-accordion close-others="true">
+						<uib-accordion-group heading="{{row.firstName}} {{row.lastName}} {{row.addressLine1}}  {{row.addressLine2}}  {{row.city}}" ng-repeat="row in displayedCollection" is-open="false" 
+						 ng-click="isopen=!isopen">
+							<br>{{row.diagnosisInfo.prescription.prescriptionTxt}}  
+							<button  type="button" ng-click="confirmprescription(row);" class="pull-right btn btn btn-lg btn-warning">Fullfill Prescription</button>
+							<br>
+
+						</uib-accordion-group>
+					</uib-accordion>
+			</td>
+			</tbody>
+			
+			
+		</table>
+

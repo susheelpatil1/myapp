@@ -1,0 +1,39 @@
+<!doctype html>
+<html ng-app="ui.bootstrap.demo">
+  <head>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.3.js"></script>
+    <script src="example.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+
+<div ng-controller="AccordionDemoCtrl">
+  <p>
+    <button type="button" class="btn btn-default btn-sm" ng-click="status.open = !status.open">Toggle last panel</button>
+    <button type="button" class="btn btn-default btn-sm" ng-click="status.isFirstDisabled = ! status.isFirstDisabled">Enable / Disable first panel</button>
+  </p>
+
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="oneAtATime">
+      Open only one at a time
+    </label>
+  </div>
+  <accordion close-others="oneAtATime">
+    <accordion-group is-open="isopen" >
+        <accordion-heading ng-click="isopen=!isopen">
+           <div>
+            I can have markup, too! 
+           <i class="pull-right glyphicon" 
+              ng-class="{'glyphicon-   chevron-down': isopen, 'glyphicon-chevron-right': !isopen}">
+           </i>
+           </div>
+       </accordion-heading>
+       This is just some content to illustrate fancy headings.
+   </accordion-group>
+</accordion>
+</div>
+  </body>
+</html>

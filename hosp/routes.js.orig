@@ -1,0 +1,276 @@
+var app = angular.module("myApp", ["ngRoute",'ngAnimate', 'ngSanitize', "ui.bootstrap",'smart-table','infinite-scroll']);
+app.config(function($routeProvider) {
+    $routeProvider
+    .when("/", {
+        templateUrl :"http://localhost/patient-info.html",
+		controller: "newPatientCtrl"
+    })
+	.when("/home", {
+        templateUrl :"http://localhost/patient-info.html",
+		controller: "newPatientCtrl"
+
+    })
+    .when("/existing", {
+        templateUrl : "http://localhost/search-form.html",
+		controller: "existingPatientCtrl"
+    })
+    .when("/queue", {
+        templateUrl : "http://localhost/queue-info.html",
+		controller: "queueCtrl"
+    })
+    .when("/doctor", {
+        templateUrl : "http://localhost/diagnosis-info.html",
+		controller: "diagnosisCtrl"
+    })	
+	.otherwise({ redirectTo: '/'});
+});
+
+
+app.controller('queueCtrl', function ($scope,$http,$interval,$uibModal,$log) {
+
+	// $interval(function() {
+				// $http({
+						// method: 'GET',
+						// url : "http://localhost/hospital/getqueuelist",
+					// }).success(function(data, status, headers, config) {
+						// $scope.queuelist = data;
+					// }).error(function(data, status, headers, config) {
+					// });
+			  // }, 100000);
+			 
+			 
+		$scope.refresh  = function() {	
+				$http({
+						method: 'GET',
+						url : "http://localhost/hospital/getqueuelist",
+					}).success(function(data, status, headers, config) {
+						$scope.queuelist = data;
+					}).error(function(data, status, headers, config) {
+					});		
+		};
+		
+		$scope.openPatient  = function(row) {
+		
+		//show modal if get results
+			$http({
+						method: 'GET',
+						url : "http://localhost/hospital/getFullDiagnosisData/"+row.patientID
+					}).success(function(data, status, headers, config) {
+
+
+						var	modalInstance = $uibModal.open({
+							  animation: 'true',
+							  ariaLabelledBy: 'modal-title',
+							  ariaDescribedBy: 'modal-body',
+							  templateUrl: 'diagnosis-info.html',
+							  controller: 'diagnosisCtrl',
+							  size: 'lg',
+							  resolve: {
+								selectedpatient: function () {
+									return data;
+
+								}
+							  }			  
+							});
+					}).error(function(data, status, headers, config) {
+					});	
+			  
+			  
+
+			
+			// modalInstance.result.then(function () {
+
+			// }, function () {
+			  // $log.info('Modal dismissed at: ' + new Date());
+			// });
+		};
+			  
+});
+
+
+app.controller('ModalInstanceCtrl', function ($uibModalInstance,$http, items) {
+  var $ctrl = this;
+  $ctrl.items = items;
+
+
+  $ctrl.ok = function () {
+    $uibModalInstance.close($ctrl.selected.patient);
+	$ctrl.selected.patient.queueName = "CHECK_IN";
+	var res = $http({
+					method: 'POST',
+					url : "http://localhost/hospital/checkin",
+					data: $ctrl.selected.patient
+				}).success(function(data, status, headers, config) {
+	
+				}).error(function(data, status, headers, config) {
+					alert( "failure message: " + JSON.stringify({data: data}));
+				});	
+  };
+
+  $ctrl.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
+
+
+
+
+app.controller("existingPatientCtrl", function($scope,$http,$uibModal, $log) {
+
+
+	$scope.patientstoselect = null;
+
+	$scope.searchPatient  = function() {
+	
+					var dataObj = ({
+					id : $scope.patientid, 
+					firstName : $scope.firstname,
+					lastName : $scope.lastname,
+					phone : $scope.phone
+					
+				});
+
+
+			var res = $http({
+					method: 'POST',
+					url : "http://localhost/hospital/searchPatient",
+					data: dataObj
+				}).success(function(data, status, headers, config) {
+					$scope.patientstoselect = data;
+	
+				}).error(function(data, status, headers, config) {
+					alert( "failure message: " + JSON.stringify({data: data}));
+				});	
+	
+	//show modal if get results
+	
+  var $ctrl = this;
+  $ctrl.items = $scope.patientstoselect;
+
+  
+
+			var modalInstance = $uibModal.open({
+			  animation: 'true',
+			  ariaLabelledBy: 'modal-title',
+			  ariaDescribedBy: 'modal-body',
+			  templateUrl: 'modal.html',
+			  controller: 'ModalInstanceCtrl',
+			  controllerAs: '$ctrl',
+			  size: 'lg',
+			  resolve: {
+				items: function () {
+				  return $ctrl.items;
+				}
+			  }
+			});
+
+			modalInstance.result.then(function (selectedItem) {
+			  $ctrl.selected = selectedItem;
+			  $ctrl.selected.queueName = "CHECK_IN";
+			  $http({
+					method: 'POST',
+					url : "http://localhost/hospital/updatepatientinfo",
+					data: $ctrl.selected
+				}).success(function(data, status, headers, config) {
+					
+				}).error(function(data, status, headers, config) {
+					alert( "failure message: " + JSON.stringify({data: data}));
+				});	
+			}, function () {
+			  $log.info('Modal dismissed at: ' + new Date());
+			});
+
+
+	
+	};
+
+});
+
+
+//diagnosis control
+app.controller("diagnosisCtrl", function($scope,$http,$uibModalInstance,selectedpatient) {
+
+	//var patient = selectedpatient;
+		$scope.patient = selectedpatient;
+		
+		
+
+					
+
+		$scope.oldDiagnosis = function () {
+            
+			return patient;
+		};
+
+  $scope.saveDiagnosis = function () {
+
+	var dataObj = ({
+					patientID : $scope.patient.patientID,
+					diagnosisTxt : $scope.patient.diagnosis,
+					prescriptionTxt : $scope.patient.prescription
+				});
+     $uibModalInstance.close();
+	//$ctrl.selected.patient.queueName = "CHECK_IN";
+	var res = $http({
+					method: 'POST',
+					url : "http://localhost/hospital/saveDiagnandpresc",
+					data: dataObj
+				}).success(function(data, status, headers, config) {
+	
+				}).error(function(data, status, headers, config) {
+					alert( "failure message: " + JSON.stringify({data: data}));
+				});	
+  };
+
+  $scope.getDiagnosisData = function () {
+    alert("1");
+  }; 
+  
+  $scope.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
+
+});
+
+
+app.controller("newPatientCtrl", function($scope,$http) {
+	
+		$scope.states = ["Maharashtra", "Karnataka", "Tamilnadu","Orissa"];    
+		var patient = $scope;
+		
+		$scope.clear  = function() {
+			patient = [];
+		};
+		
+		$scope.saveData  = function() {
+				var dataObj = ({
+					firstName : patient.firstName,
+					lastName : patient.lastName,
+					phone : patient.phone,
+					addressLine1 : patient.addressLine1,
+					addressLine2 : patient.addressLine2,
+					city : patient.city,
+					state : patient.state,
+					email : patient.email,
+					comments : patient.comment
+				});
+
+				alert(patient.firstName + patient.lastName + patient.addressLine1);
+
+			var res = $http({
+					method: 'POST',
+					url : "http://localhost/hospital/savepatientinfo",
+					data: dataObj
+				});
+				res.success(function(data, status, headers, config) {
+					$scope.message = data;
+					alert($scope.message);
+				})
+				
+				res.error(function(data, status, headers, config) {
+					alert( "failure message: " + JSON.stringify({data: data}));
+				});		
+			
+		};
+	});
+ 

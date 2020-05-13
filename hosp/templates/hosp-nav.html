@@ -1,0 +1,13 @@
+	<nav class="navbar navbar-default navbar-fixed-top">
+	  <div class="container" >
+	  
+		<ul class="nav navbar-nav">
+        <li restrict access="doctor" ng-class="{active : activeMenu === 'home'}"><a href="#/home" ng-click="activeMenu = 'home';"><h4>Home</h4> </a></li>
+        <li restrict access="doctor" ng-class="{active : activeMenu === 'newpatient'}"><a href="#/newpatient" ng-click="activeMenu = 'newpatient';"><h4>New Patient</h4></a></li>	
+        <li restrict access="doctor" ng-class="{active : activeMenu === 'existing'}"><a href="#/existing" ng-click="activeMenu = 'existing'"><h4>Existing</h4></a></li>
+		<li restrict access="doctor labtech" ng-class="{active : activeMenu === 'queue'}"><a href="#/queue" ng-click="activeMenu = 'queue'"><h4>Queue</h4></a></li>
+        <li restrict access="doctor pharm" ng-class="{active : activeMenu === 'pharmacyqueue'}"><a href="#/pharmacyqueue" ng-click="activeMenu = 'pharmacyqueue'"><h4>Pharmacy</h4></a></li>
+		</ul>
+		<button type="button" ng-model="logout" class="btn btn-lg pull-right btn-warning " ng-click="logout()">Sign Out</button>	  
+	</div>
+	</nav>

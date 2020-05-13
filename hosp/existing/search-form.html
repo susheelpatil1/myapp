@@ -1,0 +1,31 @@
+<div class="container">
+<form>
+
+		<div class="form-group" >
+			<div class="row">
+			  <div class="col-sm-3" ><label for="name">Patient ID:</label></div>
+			  <div class="col-sm-3" >
+			  <input type="text" class="form-control" ng-model="patientid" placeholder="Patient ID"></div>
+			  <div class="col-sm-3" ><label for="name">Phone Number:</label></div>
+			  <div class="col-sm-3" >
+			  <input type="text" class="form-control" ng-model="phone" placeholder="Phone Number"></div>
+			</div>			
+		</div>
+		<div class="form-group" >
+			<div class="row">
+			  <div class="col-sm-3" ><label for="name">First Name:</label></div>
+			  <div class="col-sm-3" ><input type="text" class="form-control" ng-model="firstname" placeholder="First Name"></div>
+			  <div class="col-sm-3" ><label for="name">Last Name:</label></div>
+			  <div class="col-sm-3" ><input type="text" class="form-control" ng-model="lastname" placeholder="Last Name"></div>
+			</div>
+		</div>
+		<div class="form-group" align="center">
+		  <button type="button" ng-model="search" class="btn btn-default btn-lg" ng-click="searchPatient();">Search</button>
+		  <button type="button" ng-model="clear" class="btn btn-default btn-lg">Clear</button>
+		</div>
+    </form>	
+</div>
+
+
+
+  

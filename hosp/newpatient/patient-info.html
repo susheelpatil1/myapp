@@ -1,0 +1,56 @@
+<div class="container">
+    <form name="form" ng-submit="saveData();" role="form">
+		<div class="form-group row" >
+			  <div class="col-lg-3" ><label for="name">First Name:</label></div>
+			  <div class="col-lg-3"><input type="text" class="form-control" ng-model="firstName" placeholder="First Name - Required" required></div>
+			  <div class="col-lg-3" ><label for="name">Last Name:</label></div>
+			  <div class="col-lg-3" ><input type="text" class="form-control" ng-model="lastName" placeholder="Last Name - Required" required></div>
+		</div>
+
+		<div class="form-group row" >
+			  <div class="col-lg-3" ><label for="address">Address Line1:</label></div>
+			  <div class="col-lg-9" ><input type="text" class="form-control" ng-model="addressLine1" placeholder="Address Line 1 - Required" required></div>
+		</div>
+
+		<div class="form-group row" >
+			  <div class="col-lg-3" ><label for="address">Address Line2:</label></div>
+			  <div class="col-lg-9" ><input type="text" class="form-control" ng-model="addressLine2" placeholder="Address Line 2"></div>
+		</div>
+
+		<div class="form-group row" >
+			  <div class="col-lg-3" ><label for="address" >City:</label></div>
+			  <div class="col-lg-9" ><input type="text" class="form-control" ng-model="city" placeholder="City - Required" required></div>
+		</div>
+
+		<div class="form-group row" >
+			  <div class="col-lg-3" ><label for="address">State:</label></div>
+			  <div class="col-lg-3" >
+				<select class="form-control" ng-model="state" placeholder="State" ng-options="x for x in states">
+
+				</select>		
+			  </div>		
+		</div>
+		
+		<div class="form-group row" >
+			  <div class="col-lg-3" ><label for="address">Phone Number:</label></div>
+			  <div class="col-lg-3" ><input type="text" class="form-control" ng-model="phone" placeholder="Phone Number - Required" required></div>
+
+			  <div class="col-lg-3" ><label for="address">Email:</label></div>
+			  <div class="col-lg-3" ><input type="email" class="form-control" ng-model="email" placeholder="Email"></div>
+		</div>		
+		
+		<div class="form-group row">
+		  <label class="col-lg-3" for="comment">Comments:</label>
+		  <div class="col-lg-9">
+		  <textarea class="form-control" rows="5" ng-model="comment"></textarea>
+		  </div>
+		</div>
+		
+		<div class="form-group" align="center">
+		  <button type="submit" ng-disabled="form.$invalid" ng-model="save" class="btn btn-default btn-lg" >Save</button>
+		  <button type="button" ng-model="clear" class="btn btn-default btn-lg" ng-click="clear();">Clear</button>
+		</div>
+		</form>
+
+</div>
+

@@ -1,0 +1,22 @@
+
+        <div class="modal-header">
+        </div>
+        <div class="modal-body" id="modal-body">
+		
+           
+  
+				<div ng-repeat="patient in $ctrl.items">
+					<button type="panel" class="btn btn-secondary-outline  btn-block" 
+						ng-click="$ctrl.selected.patient = patient">
+							{{ patient.firstName }}  {{ patient.lastName }}  -  {{ patient.phone }} <br>
+							{{ patient.addressLine1 }} <br> 
+							{{ patient.city }}
+					</button>
+<br>
+                </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button btn-lg" ng-click="$ctrl.ok()">OK</button>
+            <button class="btn btn-warning" type="button btn-lg" ng-click="$ctrl.cancel()">Cancel</button>
+        </div>
+ 

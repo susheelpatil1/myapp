@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+  <title>Hospital</title>
+</head>
+
+<body >
+
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
+		<script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.3.js"></script>
+	  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.8/smart-table.min.js"></script>
+	  	  <script src="ng-infinite-scroll.min.js"></script>
+
+	
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="hospital.css">
+   <script src="routes.js"></script>
+
+
+  
+	<nav class="navbar navbar-default navbar-fixed-top">
+	  <div class="container" >
+		<ul class="nav navbar-nav">
+        <li ng-class="{active : activeMenu === 'home'}"><a href="#/home" ng-click="activeMenu = 'home';">Home </a></li>
+        <li ng-class="{active : activeMenu === 'existing'}"><a href="#/existing" ng-click="activeMenu = 'existing'">Existing</a></li>
+		<li ng-class="{active : activeMenu === 'queue'}"><a href="#/queue" ng-click="activeMenu = 'queue'">Queue</a></li>
+		<li ng-class="{active : activeMenu === 'doctor'}"><a href="#/doctor" ng-click="activeMenu = 'doctor'">Doctor</a></li>
+
+		</ul>
+	  </div>
+	</nav>	
+	<div ng-view></div>
+</body>
+</html>
